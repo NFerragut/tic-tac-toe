@@ -73,7 +73,7 @@ export default function Game() {
     setSortAscending(!sortAscending)
   }
 
-  const moves = history.map((_, move) => {
+  const moves = history.map((squares, move) => {
     let description
     if (move === currentMove) {
       return (
@@ -81,7 +81,8 @@ export default function Game() {
       )
     }
     if (move > 0) {
-      description = 'Go to move #' + move
+      const [x, y] = getMoveCoordinates(history[move - 1], squares)
+      description = 'Go to move #' + move + '(' + x + ',' + y + ')'
     } else {
       description = 'Go to game start'
     }
@@ -123,4 +124,14 @@ function getWinningSquares(squares) {
     }
   }
   return [[], null]
+}
+
+function getMoveCoordinates(prevSquares, nextSquares) {
+  const change = prevSquares.map((square, i) => {
+    return square !== nextSquares[i]
+  })
+  const position = change.indexOf(true)
+  const x = position % 3
+  const y = (position - x) / 3
+  return [x, y]
 }
