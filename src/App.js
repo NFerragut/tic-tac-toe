@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { React, useState } from 'react'
+import PropTypes from 'prop-types';
 
 function Square({ value, onSquareClick, isWinner }) {
   const classname = (isWinner ? 'square winner' : 'square')
@@ -6,10 +7,15 @@ function Square({ value, onSquareClick, isWinner }) {
     <button className={classname} onClick={onSquareClick}>{value}</button>
   )
 }
+Square.propTypes = {
+  value: PropTypes.string,
+  onSquareClick: PropTypes.func,
+  isWinner: PropTypes.bool
+}
 
 function Board({ xIsNext, squares, onPlay }) {
   function handleClick(i) {
-    const [_, winner] = getWinningSquares(squares)
+    const [_win_squares, winner] = getWinningSquares(squares)
     if (squares[i] || winner) {
       return
     }
@@ -50,6 +56,11 @@ function Board({ xIsNext, squares, onPlay }) {
       ))}
     </>
   )
+}
+Board.propTypes = {
+  xIsNext: PropTypes.bool,
+  squares: PropTypes.array,
+  onPlay: PropTypes.func
 }
 
 export default function Game() {
