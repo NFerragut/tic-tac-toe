@@ -81,8 +81,8 @@ export default function Game() {
       )
     }
     if (move > 0) {
-      const [x, y] = getMoveCoordinates(history[move - 1], squares)
-      description = 'Go to move #' + move + '(' + x + ',' + y + ')'
+      const [player, x, y] = getMoveCoordinates(history[move - 1], squares)
+      description = 'Go to move #' + move + ' ' + player + '@(' + x + ',' + y + ')'
     } else {
       description = 'Go to game start'
     }
@@ -133,5 +133,5 @@ function getMoveCoordinates(prevSquares, nextSquares) {
   const position = change.indexOf(true)
   const x = position % 3
   const y = (position - x) / 3
-  return [x, y]
+  return [nextSquares[position], x, y]
 }
